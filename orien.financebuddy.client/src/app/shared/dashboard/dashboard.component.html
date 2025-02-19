@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <!-- <div>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>Favorite food</mat-label>
+              <input matInput placeholder="Ex. Pizza" value="Sushi">
+            </mat-form-field>
+        </form>
+    </div> -->
+    <div class="p-3">
+        <form [formGroup]="createForm" class="d-flex gap-4">
+            <mat-form-field class="example-full-width">
+                <mat-label>Montly</mat-label>
+                <input matInput type="number" value="Sushi" formControlName="montly" (ngModelChange)="calculateReturn()">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Interest Rate</mat-label>
+                <input matInput type="number" value="Sushi" formControlName="interestRate" (ngModelChange)="calculateReturn()">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Years</mat-label>
+                <input matInput type="number" value="Sushi" formControlName="years" (ngModelChange)="calculateReturn()">
+            </mat-form-field>
+        </form>
+        <!-- <div class="mx-3">
+            <button mat-raised-button color="primary" class="px-4" (click)="calculateReturn()">Calculate</button>
+        </div> -->
+    </div>
+    <div class="px-3 text-white">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Estimated Total Investment:</td>
+                    <td>{{totalInvestment | currency: 'INR'}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Estimated Return:</td>
+                    <td>{{return[return.length-1] - totalInvestment | currency: 'INR'}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Estimated Total:</td>
+                    <td>{{return[return.length-1] | currency: 'INR'}}</td>
+                    <td>{{(return[return.length-1] - totalInvestment)/return[return.length-1] * 100 | number: '1.0-2'}}%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- <h3 class="text-white">Your Total Investment: {{return[return.length-1] | currency: 'INR'}}</h3>
+        <h3 class="text-white">Your Total Return: {{return[return.length-1] | currency: 'INR'}}</h3> -->
+    </div>
+</div>
