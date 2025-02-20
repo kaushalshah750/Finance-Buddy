@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Orien.FinanceBuddy.Data.Microsoft.Extensions.DependencyInjection;
+using Orien.FinanceBuddy.Business.Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -20,6 +21,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.Audience = "156985885803-aqehd6sc7vfnkidaq1h4440dffoao55h.apps.googleusercontent.com";
     });
 builder.Services.AddAuthorization();
+
+builder.Services.AddBusinessServices();
 
 var app = builder.Build();
 

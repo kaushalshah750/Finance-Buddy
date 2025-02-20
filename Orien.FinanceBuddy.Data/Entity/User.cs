@@ -16,11 +16,6 @@ namespace Orien.FinanceBuddy.Data.Entity
         public string Uid { get; set; }
 
         /// <summary>
-        /// Gets or Sets Google Id.
-        /// </summary>
-        public string Google_id { get; set; }
-
-        /// <summary>
         /// Gets or Sets Name.
         /// </summary>
         public string Name { get; set; }
@@ -29,11 +24,6 @@ namespace Orien.FinanceBuddy.Data.Entity
         /// Gets or Sets Email.
         /// </summary>
         public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Phone.
-        /// </summary>
-        public string Phone { get; set; }
 
         /// <summary>
         /// Gets or Sets Picture.

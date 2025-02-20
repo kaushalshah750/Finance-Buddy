@@ -12,8 +12,8 @@ using Orien.FinanceBuddy.Data;
 namespace Orien.FinanceBuddy.Data.Migrations
 {
     [DbContext(typeof(FinanceBuddyDbContext))]
-    [Migration("20250219201652_SetupinitialTable")]
-    partial class SetupinitialTable
+    [Migration("20250220190548_setupinitialTable")]
+    partial class setupinitialTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,18 +124,10 @@ namespace Orien.FinanceBuddy.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Google_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Last_Login")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
