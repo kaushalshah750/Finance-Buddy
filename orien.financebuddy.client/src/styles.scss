@@ -10,6 +10,17 @@ body {
     background-color: #303030 !important;
 }
 
+.grid{
+    display: grid;
+}
+
+.grid-1-1{
+    grid-template-columns: 1fr 1fr;
+}
+
+.gap20{
+    gap: 20px;
+}
 .active{
     background-color: #7B1FA2 !important;
 }

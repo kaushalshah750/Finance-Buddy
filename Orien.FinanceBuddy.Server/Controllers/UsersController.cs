@@ -17,7 +17,7 @@ namespace Orien.FinanceBuddy.Server.Controllers
         }
 
         [Authorize]
-        [HttpPost("authenticate")]
+        [HttpGet("authenticate")]
         public async Task<IActionResult> AuthenticateUser()
         {
             try

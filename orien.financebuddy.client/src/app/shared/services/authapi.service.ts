@@ -11,7 +11,7 @@ import { UserDetails } from '../Models/UserDetails';
 export class AuthapiService {
 
   private apiUrl = environment.baseUrl;
-  url:string = "api/Authentication/"
+  url:string = "api/Users/authenticate"
 
   constructor(
     private http: HttpClient,
@@ -33,13 +33,19 @@ export class AuthapiService {
     return this.http.delete<T>(`${this.apiUrl}${endpoint}`, { headers });
   }
 
-  checkUser(user:UserDetails): Observable<string> {
-    return this.http.post(`${this.apiUrl}${this.url}` + "check-user", user, {
-      responseType: 'text'
-    });
+  getUserDetails(token:string): Observable<UserDetails> {
+    const headers = this.userCreateHeaders(token);
+    return this.http.get<UserDetails>(`${this.apiUrl}${this.url}`, { headers });
   }
 
   // Add more methods (post, put, delete) as needed
+
+  private userCreateHeaders(token:string): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+  }
 
   private createHeaders(): HttpHeaders {
     const token = this.authService.getAccessToken();

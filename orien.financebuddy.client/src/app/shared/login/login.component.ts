@@ -2,6 +2,9 @@ declare var google:any;
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { AuthapiService } from '../services/authapi.service';
+import { UserDetails } from '../Models/UserDetails';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +21,8 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authApiSerive: AuthapiService,
+    private router: Router
   ){}
 
   ngOnInit(){
@@ -40,7 +45,19 @@ export class LoginComponent {
   handleCredentialResponse(response: any) {
     console.log('Google Token:', response);
     console.log('Google Token:', response.credential);
-    // Send this token to your backend for verification
+
+    localStorage.removeItem("access_token")
+    localStorage.removeItem("UserInfo")
+
+    this.authApiSerive.getUserDetails(response.credential).subscribe((res:UserDetails) => {
+      localStorage.setItem("access_token", response.credential)
+      localStorage.setItem("UserInfo", JSON.stringify(res))
+
+      this.router.navigate(['home']);
+
+    })
+
+
   }
   
   decodeToken(token:string){

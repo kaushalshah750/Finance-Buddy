@@ -20,6 +20,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.Authority = "https://accounts.google.com";
         options.Audience = "156985885803-aqehd6sc7vfnkidaq1h4440dffoao55h.apps.googleusercontent.com";
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddBusinessServices();
@@ -41,7 +48,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("AllowAllOrigins");
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
