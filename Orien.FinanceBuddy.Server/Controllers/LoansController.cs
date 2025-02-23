@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Orien.FinanceBuddy.Business.Models;
+using Orien.FinanceBuddy.Business.Services;
+using Orien.FinanceBuddy.Business.Services.Implementation;
 using Orien.FinanceBuddy.Data;
 using Orien.FinanceBuddy.Data.Entity;
 using System.Text.Json;
@@ -11,44 +14,48 @@ namespace Orien.FinanceBuddy.Server.Controllers
     public class LoansController : ControllerBase
     {
         private readonly FinanceBuddyDbContext dbContext;
+        private readonly ILoanService loanService;
+        private readonly CommonService commonService;
 
-        public LoansController(FinanceBuddyDbContext dbContext)
+        public LoansController(
+            FinanceBuddyDbContext dbContext,
+            ILoanService loanService,
+            CommonService commonService)
         {
             this.dbContext = dbContext;
+            this.loanService = loanService;
+            this.commonService = commonService;
         }
 
         [HttpGet]
-        public async Task<List<Loan>> GetLoans()
+        public async Task<List<LoanDTO>> GetLoans()
         {
-            return await this.dbContext.Loans.ToListAsync();
+            return await this.loanService.GetLoans();
         }
 
         [HttpGet("banks")]
         public async Task<List<Bank>> GetBanks()
         {
-            return await this.dbContext.Banks.ToListAsync();
+            return await this.loanService.GetBanks();
         }
 
         [HttpPost("add")]
-        public string AddNewLoan(Loan loan)
+        public async Task<bool> AddNewLoan(Loan loan)
         {
-            this.dbContext.Loans.Add(loan);
-            this.dbContext.SaveChanges();
-            return "Added";
+            var userId = this.commonService.GetUserId();
+            return await this.loanService.AddNewLoan(loan, userId);
         }
 
-        [HttpPost("update")]
-        public string UpdateLoan(Loan loan)
+        [HttpPut("update")]
+        public async Task<bool> UpdateLoan(Loan loan)
         {
-            var loanData = this.dbContext.Loans.Where(x => x.Id == loan.Id).FirstOrDefault();
+            return await this.loanService.UpdateLoan(loan);
+        }
 
-            loanData.Monthly_Emi = loan.Monthly_Emi;
-            loanData.Name = loan.Name;
-            loanData.Bank = loan.Bank;
-            loanData.Amount = loan.Bank;
-
-            this.dbContext.SaveChanges();
-            return "Updated";
+        [HttpDelete("delete/{loanId}")]
+        public async Task<bool> DeleteLoan(long loanId)
+        {
+            return await this.loanService.DeleteLoan(loanId);
         }
     }
 }

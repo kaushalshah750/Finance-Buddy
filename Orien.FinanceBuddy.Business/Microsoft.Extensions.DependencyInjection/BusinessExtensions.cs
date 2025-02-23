@@ -8,7 +8,9 @@ namespace Orien.FinanceBuddy.Business.Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddBusinessServices(this IServiceCollection services)
         {
+            services.AddScoped<CommonService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoanService, LoanService>();
             return services;
         }
     }

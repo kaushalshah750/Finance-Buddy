@@ -28,6 +28,11 @@ export class AuthapiService {
     return this.http.post<T>(`${this.apiUrl}${endpoint}`, data, { headers });
   }
 
+  put<T>(endpoint: string, data:any): Observable<T> {
+    const headers = this.createHeaders();
+    return this.http.put<T>(`${this.apiUrl}${endpoint}`, data, { headers });
+  }
+
   delete<T>(endpoint: string): Observable<T> {
     const headers = this.createHeaders();
     return this.http.delete<T>(`${this.apiUrl}${endpoint}`, { headers });

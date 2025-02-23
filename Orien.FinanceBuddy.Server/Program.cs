@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Orien.FinanceBuddy.Data.Microsoft.Extensions.DependencyInjection;
 using Orien.FinanceBuddy.Business.Microsoft.Extensions.DependencyInjection;
+using Orien.FinanceBuddy.Business.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -30,6 +31,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddBusinessServices();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

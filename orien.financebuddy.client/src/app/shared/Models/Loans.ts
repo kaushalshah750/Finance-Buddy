@@ -1,10 +1,10 @@
 export interface Loans{
-    Id: number
-    Name: string
-    Bank: number
-    Amount: number
-    Monthly_Emi: number
-    AddedBy_UId: string
-    CreatedDate: Date
-    UpdatedDate: Date
+    id: number
+    name: string
+    bank: number
+    amount: number
+    monthly_Emi: number
+    addedBy_UId: string
+    createdDate: Date
+    updatedDate: Date
 }

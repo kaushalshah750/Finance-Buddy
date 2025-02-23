@@ -25,9 +25,9 @@ export class LoanDialogComponent {
     this.getBankList()
     this.loanForm = this.fb.group({
       name: [this.data?.name || '', Validators.required],
-      bank: [this.data?.bank || '', Validators.required],
+      bank: [this.data?.bank.id || '', Validators.required],
       amount: [this.data?.amount || '', Validators.required],
-      monthlyEmi: [this.data?.monthly_Emi || '']
+      monthlyEmi: [this.data?.monthly_Emi || '', Validators.required]
     });
   }
 
@@ -38,29 +38,38 @@ export class LoanDialogComponent {
   }
 
   onSubmit() {
+    console.log("onSubmit()")
     if (this.loanForm.valid) {
       var loan:Loans = {
-        Id: this.data.id ?? 0,
-        Amount: this.loanForm.controls['amount'].value,
-        Bank: this.loanForm.controls['bank'].value,
-        AddedBy_UId: '',
-        CreatedDate: new Date(Date.now()),
-        Monthly_Emi: this.loanForm.controls['monthlyEmi'].value,
-        Name: this.loanForm.controls['name'].value,
-        UpdatedDate: new Date(Date.now())
+        id: this.data != null ? this.data.id : 0,
+        amount: this.loanForm.controls['amount'].value,
+        bank: this.loanForm.controls['bank'].value,
+        addedBy_UId: '',
+        createdDate: new Date(Date.now()),
+        monthly_Emi: this.loanForm.controls['monthlyEmi'].value,
+        name: this.loanForm.controls['name'].value,
+        updatedDate: new Date(Date.now())
       }
 
       if(this.data){
-        this.loanSerive.updateLoan(loan).subscribe((res:string) => {})
+        this.loanSerive.updateLoan(loan).subscribe((res:boolean) => {
+          if(res){
+            this.dialogRef.close(this.loanForm.value);
+          }
+        })
       }else{
-        this.loanSerive.addLoan(loan).subscribe((res:string) => {})
+        this.loanSerive.addLoan(loan).subscribe((res:boolean) => {
+          if(res){
+            this.dialogRef.close(this.loanForm.value);
+          }
+        })
       }
 
-      this.dialogRef.close(this.loanForm.value);
     }
   }
 
   onClose() {
+    console.log("onClose()")
     this.dialogRef.close();
   }
 }

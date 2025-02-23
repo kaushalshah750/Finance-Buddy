@@ -1,7 +1,6 @@
 declare var google:any;
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { AuthapiService } from '../services/authapi.service';
 import { UserDetails } from '../Models/UserDetails';
 import { Router } from '@angular/router';
@@ -27,6 +26,7 @@ export class LoginComponent {
 
   ngOnInit(){
     this.initGoogleAuth()
+    this.checkIfLogin()
   }
   
   initGoogleAuth() {
@@ -54,10 +54,15 @@ export class LoginComponent {
       localStorage.setItem("UserInfo", JSON.stringify(res))
 
       this.router.navigate(['home']);
-
     })
+  }
 
-
+  checkIfLogin(){
+    var userinfo = localStorage.getItem("UserInfo")
+    console.log(userinfo)
+    if(userinfo){
+      this.router.navigate(['loans']);
+    }
   }
   
   decodeToken(token:string){

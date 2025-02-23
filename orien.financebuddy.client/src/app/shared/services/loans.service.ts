@@ -20,11 +20,15 @@ export class LoansService {
   }
 
   addLoan(loan:Loans) {
-    return this.authApiService.post<string>(this.apiUrl + "/add", loan)
+    return this.authApiService.post<boolean>(this.apiUrl + "/add", loan)
   }
 
   updateLoan(loan:Loans) {
-    return this.authApiService.post<string>(this.apiUrl + "/update", loan)
+    return this.authApiService.put<boolean>(this.apiUrl + "/update", loan)
+  }
+
+  deleteLoan(loanId:number) {
+    return this.authApiService.delete<boolean>(this.apiUrl + "/delete/" + loanId)
   }
 
   getBanks() {
